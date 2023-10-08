@@ -42,7 +42,6 @@ df = pd.read_html(html_buffer)[0]
 
 df = df.astype(float, errors='ignore')
 
-
 image_links = []
 
 for tr in soup.select('tr'):
@@ -68,19 +67,14 @@ while os.path.exists(f'mackolik_verileri{count}.xlsx'):
 
 excel_file =f'mackolik_verileri{count}.xlsx'
 
-
 df[4] = image_links
-
 
 for col in df.columns[10:50]:
     if df[col].dtype == 'object':
         df[col] = df[col].apply(lambda x: x[:-2] + ',' + x[-2:] if isinstance(x, str) and x.isnumeric() and 2 < len(x) < 5 else x)
-
 
 df.to_excel(excel_file, index=False, engine='openpyxl')
 
 print(f'Veriler {excel_file} dosyasına kaydedildi.')
 
 driver.quit()
-
-# Böyle Bir Hata Alıyorum
